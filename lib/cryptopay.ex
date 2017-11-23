@@ -16,8 +16,31 @@ defmodule Cryptopay do
     end
   end
 
+  @doc """
+  Retrieve all Cryptopay rate tickers
+  """
+  def tickers_rate do
+    case get("tickers") do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} -> {:ok, parse_to_tickers_rate_struct(body)}
+      {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} -> {:error, "#{status_code} - #{body}"}
+    end
+  end
+
   defp parse_to_ticker_struct(json) do
-    json
+    %Cryptopay.Ticker{
+      base_currency: json["base_currency"],
+      quote_currency: json["quote_currency"],
+      bid_rate: Decimal.new(json["bid_rate"]),
+      ask_rate: Decimal.new(json["ask_rate"])
+    }
+  end
+
+  defp parse_to_tickers_rate_struct(json) do
+    Map.keys(json)
+    |> Enum.reduce(%{}, fn(key, acc) -> Map.put(acc, key, %Cryptopay.Ticker{
+      
+    }) end)
   end
 
   defp process_url(url) do

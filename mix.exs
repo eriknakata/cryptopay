@@ -7,7 +7,15 @@ defmodule Cryptopay.Mixfile do
       version: "0.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+
+      # Docs
+      name: "Cryptopay",
+      source_url: "https://github.com/eriknakata/cryptopay",
+      homepage_url: "http://YOUR_PROJECT_HOMEPAGE",
+      docs: [main: "Cryptopay", # The main page in the docs
+              #logo: "path/to/logo.png",
+              extras: ["README.md"]]
     ]
   end
 
@@ -23,7 +31,9 @@ defmodule Cryptopay.Mixfile do
     [
       {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
       {:httpoison, "~> 0.13"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
+      {:decimal, "~> 1.0"}
     ]
   end
 end
